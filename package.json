@@ -1,0 +1,27 @@
+{
+  "name": "farsiscript",
+  "version": "0.1.0",
+  "description": "A programming language that inspired by farsi.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IROpen/farsiScript.git"
+  },
+  "keywords": [
+    "farsi",
+    "nlp",
+    "persian"
+  ],
+  "author": "IROpen",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/IROpen/farsiScript/issues"
+  },
+  "homepage": "https://github.com/IROpen/farsiScript#readme",
+  "dependencies": {
+    "earley-parser": "^1.2.0"
+  }
+}
