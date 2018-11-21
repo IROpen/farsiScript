@@ -8,6 +8,9 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+process.stdout.write('\x1b[36m>>> \x1b[0m');
+
 rl.on('line', async (input) => {
     console.log(await FS.eval(input));
+    process.stdout.write('\x1b[36m>>> \x1b[0m');
 });
