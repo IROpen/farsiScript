@@ -132,8 +132,9 @@ FSI = {
     evlCmd : async function (tr){
 	if (tr.subtrees.length == 4){
 	    const param = await FSI.evl(tr.subtrees[0]);
-	    const nam = tr.subtrees[2].root[0];
+	    const nam = tr.subtrees[2].subtrees[0].root[0];
 	    const task = FSI.tasklist.get(nam);
+	    //console.log(nam,task,FSI.tasklist);
 	    task(param);
 	}
     },

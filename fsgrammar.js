@@ -1,18 +1,20 @@
 const tinynlp = require('./earley-parser.js');
 
 wordlist = new Map([
-['است','ast'],
-['.','noghte'],
-['?','alamat_soal'],
-['(','parantez_baz'],
-[')','parantez_baste'],
-['،','virgool'],
-['؟','alamat_soal'],
-['چیست','chist'],
-['نوعی','noyi'],
-['در','harfe_ezafe'],
-['با','harfe_ezafe'],
-['هر','har'],
+    ['است','ast'],
+    ['.','noghte'],
+    ['?','alamat_soal'],
+    ['(','parantez_baz'],
+    [')','parantez_baste'],
+    ['،','virgool'],
+    ['؟','alamat_soal'],
+    ['چیست','chist'],
+    ['نوعی','noyi'],
+    ['در','harfe_ezafe'],
+    ['با','harfe_ezafe'],
+    ['هر','har'],
+    ['کن','kon'],
+    ['را','ra'],
 ]);
 
 
