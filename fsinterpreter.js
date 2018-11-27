@@ -18,7 +18,20 @@ FSI = {
     ['انسان' , 
     {par:'چیز' , members:[] } ],
     ]),
-        
+
+    tasklist : new Map([
+    ['صبر' , 
+     async function(param,motamam){
+	 const delay = function (ms){
+	     return new Promise(resolve=>{
+		 setTimeout(resolve,ms)
+	     });
+	 }
+	 await delay(param);
+     } ],
+    ]),
+    
+    
     ClassicType : function(id,tpn){
         this.id = id;
         this.type = tpn;
@@ -116,9 +129,21 @@ FSI = {
         }
         return tr.subtrees.map(f).join(' ');
     },
+    evlCmd : async function (tr){
+	if (tr.subtrees.length == 4){
+	    const param = await FSI.evl(tr.subtrees[0]);
+	    const nam = tr.subtrees[2].root[0];
+	    const task = FSI.tasklist.get(nam);
+	    task(param);
+	}
+    },
     run : async function (tr){
         let ts = tr.subtrees[0];
-        if (ts.root == 'ask'){
+	if (ts.root == 'cmd'){
+	    FSI.evlCmd(ts);
+	    return "در حال انجام است .";
+	}
+	if (ts.root == 'ask'){
             let val = await FSI.evl(ts.subtrees[0]);
             return FSI.treeToText(ts.subtrees[0])+" ، "+val+" است .";
         }
