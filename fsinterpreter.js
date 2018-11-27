@@ -50,10 +50,10 @@ FSI = {
         }
         return undefined;
     },
-    evl : function f(tr){
+    evl : async function f(tr){
         if (tr.root == 'I') return tr.I;
         if (tr.subtrees[0].root == 'parantez_baz'){
-            return f(tr.subtrees[1]);
+            return await f(tr.subtrees[1]);
         }
         if (tr.subtrees[0].root == 'noyi'){
             const tpn = tr.subtrees[1].subtrees[0].root[0];
@@ -80,7 +80,7 @@ FSI = {
         if (tr.subtrees.length == 2){
             let ts = tr.subtrees[0];
             if (ts.root == 'esm'){
-                let param = f(tr.subtrees[1]);
+                let param = await f(tr.subtrees[1]);
                 let func = ts.subtrees[0].root[0];
                 if (!FSI.funclist.has(func)) return undefined;
                 //console.log(func);
@@ -91,7 +91,7 @@ FSI = {
         if (tr.subtrees.length == 3){
             let ts = tr.subtrees[0];
             if (ts.root == 'esm'){
-                let param = f(tr.subtrees[1]);
+                let param = await f(tr.subtrees[1]);
                 let motamam = FSI.evlMotamamList(tr.subtrees[2]);
                 let func = ts.subtrees[0].root[0];
                 if (!FSI.funclist.has(func)) return undefined;
@@ -101,11 +101,11 @@ FSI = {
             }
         }
     },
-    evl_with_dic : function (tr,dic){
+    evl_with_dic : async function (tr,dic){
         let backup = [];
         dic.forEach((x,y)=>{ if (FSI.varlist.has(y)) backup.push([y,FSI.varlist.get(y)]); });
         dic.forEach((x,y)=>FSI.varlist.set(y,x));
-        let retval = FSI.evl(tr);
+        let retval = await FSI.evl(tr);
         dic.forEach((x,y)=>FSI.varlist.delete(y));
         backup.forEach(x=>FSI.varlist.set(x[0],x[1]));
         return retval;
@@ -116,15 +116,15 @@ FSI = {
         }
         return tr.subtrees.map(f).join(' ');
     },
-    run : function (tr){
+    run : async function (tr){
         let ts = tr.subtrees[0];
         if (ts.root == 'ask'){
-            let val = FSI.evl(ts.subtrees[0]);
+            let val = await FSI.evl(ts.subtrees[0]);
             return FSI.treeToText(ts.subtrees[0])+" ، "+val+" است .";
         }
         if (ts.root == 'assign'){
             let vn = ts.subtrees.find(x=>(x.root == "esm")).subtrees[0].root[0];
-            let val = FSI.evl(ts.subtrees.find(x=>(x.root == "eval_task")));
+            let val = await FSI.evl(ts.subtrees.find(x=>(x.root == "eval_task")));
             FSI.varlist.set(vn,val);
             return "فهمیدم .";
         }
@@ -141,10 +141,10 @@ FSI = {
                 mymotamam = FSI.evlMotamamList(ts.subtrees[2]);
             }
             if (trp.root == 'eval_task'){
-                let myparam = FSI.evl(trp);
-                FSI.funclist.get(funcname).push( function (param,motamam){
+                let myparam = await FSI.evl(trp);
+                FSI.funclist.get(funcname).push( async function (param,motamam){
                     if (param == myparam && FSI.matchMotamam(motamam,mymotamam)){
-                        return FSI.evl(rulf);
+                        return await FSI.evl(rulf);
                     }    
                     return undefined;
                 }
@@ -152,9 +152,9 @@ FSI = {
                 return "فهمیدم .";
             } 
             if (trp.root == 'har'){
-                FSI.funclist.get(funcname).push( function (param,motamam){
+                FSI.funclist.get(funcname).push( async function (param,motamam){
                     if (FSI.matchMotamam(motamam,mymotamam)){
-                        return FSI.evl_with_dic(rulf,new Map([["او",param]]));
+                        return await FSI.evl_with_dic(rulf,new Map([["او",param]]));
                     }    
                     return undefined;
                 }
