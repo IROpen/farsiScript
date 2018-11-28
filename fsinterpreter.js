@@ -20,15 +20,16 @@ FSI = {
     ]),
 
     tasklist : new Map([
-    ['صبر' , 
-     async function(param,motamam){
-	 const delay = function (ms){
-	     return new Promise(resolve=>{
-		 setTimeout(resolve,ms)
-	     });
-	 }
-	 await delay(param);
-     } ],
+	['صبر' , 
+	 async function(param,motamam){
+	     const delay = function (ms){
+		 return new Promise(resolve=>{
+		     setTimeout(resolve,ms)
+		 });
+	     }
+	     await delay(param);
+	 } ],
+	
     ]),
     
     
@@ -135,7 +136,7 @@ FSI = {
 	    const nam = tr.subtrees[2].subtrees[0].root[0];
 	    const task = FSI.tasklist.get(nam);
 	    //console.log(nam,task,FSI.tasklist);
-	    task(param);
+	    await task(param,[]);
 	}
     },
     run : async function (tr){

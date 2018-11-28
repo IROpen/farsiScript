@@ -1,6 +1,18 @@
 const FSI = require('./fsinterpreter');
 const fparse = require('./fsgrammar');
 
+FSI.tasklist.set('اجرا',async function(param,motamam){
+    if (motamam.length==0){
+	try{
+	    const tr = fparse(param)[0];
+	    return await FSI.run(tr);
+	}finally{
+	    //console.log(e);
+	    return undefined;
+	}
+    }
+});
+
 module.exports = {
     eval : async x => {
 	try{
