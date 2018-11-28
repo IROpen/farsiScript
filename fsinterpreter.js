@@ -47,10 +47,10 @@ FSI = {
         }
         return true;
     },
-    evlMotamamList : function(tr){
+    evlMotamamList : async function(tr){
         if (tr.subtrees.length == 1){
             let ts = tr.subtrees[0];
-            return [ { harfeEzafe : ts.subtrees[0].root[0] , value : FSI.evl(ts.subtrees[1])  } ];
+            return [ { harfeEzafe : ts.subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
         }
     },
     runFunc : function(func,param,motamam){
@@ -105,7 +105,7 @@ FSI = {
             let ts = tr.subtrees[0];
             if (ts.root == 'esm'){
                 let param = await f(tr.subtrees[1]);
-                let motamam = FSI.evlMotamamList(tr.subtrees[2]);
+                let motamam = await FSI.evlMotamamList(tr.subtrees[2]);
                 let func = ts.subtrees[0].root[0];
                 if (!FSI.funclist.has(func)) return undefined;
                 //console.log(func);
