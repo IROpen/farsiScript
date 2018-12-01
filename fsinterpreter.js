@@ -58,15 +58,16 @@ FSI = {
             return [ { harfeEzafe : ts.subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
         }
     },
-    runFunc : function(func,param,motamam){
-        if (func == undefined) return undefined;
-        if (motamam == undefined) motamam = [];
+    runFunc : function(fname,param,motamam){
+	if (motamam == undefined) motamam = [];
+	const func = FSI.funclist.get(fname);
+        if (func == undefined) return FSI.defs.funcf(fname,param,motamam);
         for (let i = func.length - 1;i>=0;i--){
             //console.log(func[i]);
             let jav = func[i](param,motamam);
             if (jav != undefined ) return jav;
         }
-        return undefined;
+        return FSI.defs.funcf(fname,param,motamam);
     },
     evl : async function f(tr){
         if (tr.root == 'I') return tr.I;
@@ -105,10 +106,9 @@ FSI = {
             if (ts.root == 'esm'){
                 let param = await f(tr.subtrees[1]);
                 let func = ts.subtrees[0].root[0];
-                if (!FSI.funclist.has(func)) return undefined;
                 //console.log(func);
                 //console.log(FSI.funclist.get(func));
-                return FSI.runFunc(FSI.funclist.get(func),param);
+                return FSI.runFunc(func,param);
             }
         }
         if (tr.subtrees.length == 3){
@@ -117,10 +117,9 @@ FSI = {
                 let param = await f(tr.subtrees[1]);
                 let motamam = await FSI.evlMotamamList(tr.subtrees[2]);
                 let func = ts.subtrees[0].root[0];
-                if (!FSI.funclist.has(func)) return undefined;
                 //console.log(func);
                 //console.log(FSI.funclist.get(func));
-                return FSI.runFunc(FSI.funclist.get(func),param,motamam);
+                return FSI.runFunc(func,param,motamam);
             }
         }
     },
