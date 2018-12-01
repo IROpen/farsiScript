@@ -1,4 +1,8 @@
 FSI = {
+    defs:{
+	varf:x=>x,
+	funcf:(fname,param,motamam)=>(fname+' '+param),
+    },
     varlist : new Map([]),
     funclist : new Map([
     ['منها-منها' , 
@@ -88,8 +92,13 @@ FSI = {
                 return Number(ts.subtrees[0].root);
             }
             if (ts.root == 'esm'){
-                return FSI.varlist.get(ts.subtrees[0].root[0]);
-            }
+		if (FSI.varlist.has(ts.subtrees[0].root[0])){
+                    return FSI.varlist.get(ts.subtrees[0].root[0]);
+		}
+		else{
+		    return FSI.defs.varf(ts.subtrees[0].root[0]);
+		}
+	    }
         }
         if (tr.subtrees.length == 2){
             let ts = tr.subtrees[0];
