@@ -58,16 +58,16 @@ FSI = {
             return [ { harfeEzafe : ts.subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
         }
     },
-    runFunc : function(fname,param,motamam){
+    runFunc : async function(fname,param,motamam){
 	if (motamam == undefined) motamam = [];
 	const func = FSI.funclist.get(fname);
-        if (func == undefined) return FSI.defs.funcf(fname,param,motamam);
+        if (func == undefined) return await FSI.defs.funcf(fname,param,motamam);
         for (let i = func.length - 1;i>=0;i--){
             //console.log(func[i]);
-            let jav = func[i](param,motamam);
+            let jav = await func[i](param,motamam);
             if (jav != undefined ) return jav;
         }
-        return FSI.defs.funcf(fname,param,motamam);
+        return await FSI.defs.funcf(fname,param,motamam);
     },
     evl : async function f(tr){
         if (tr.root == 'I') return tr.I;
