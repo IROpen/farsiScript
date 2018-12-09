@@ -7,7 +7,7 @@ const f2f = {};
 const { exec } = require('child_process');
 
 program
-  .version('0.1.0')
+  .version('0.2.0')
   .option('-f, --fingilish', 'use finglish instead of farsi')
   .parse(process.argv);
 
