@@ -152,7 +152,7 @@ FSI = {
 	    const motam = await FSI.evlMotamamList(tr.subtrees[2]);
 	    const nam = tr.subtrees[3].subtrees[0].root[0];
 	    const task = FSI.tasklist.get(nam);
-	    console.log(param,motam);
+	    //console.log(param,motam);
 	    await task(param,motam);
 	    return;
 	}

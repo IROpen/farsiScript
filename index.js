@@ -11,7 +11,7 @@ FSI.tasklist.set('اجرا',async function(param,motamam){
 	    var i = motamam[0].value;
 	    while(i--){
 		await FSI.evlCmd(tr);
-		console.log("runed ",param);
+		//console.log("runed ",param);
 	    }
 	}
     }catch(e){
