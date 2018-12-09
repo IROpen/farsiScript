@@ -55,7 +55,7 @@ FSI = {
     evlMotamamList : async function(tr){
         if (tr.subtrees.length == 1){
             let ts = tr.subtrees[0];
-            return [ { harfeEzafe : ts.subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
+            return [ { harfeEzafe : ts.subtrees[0].subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
         }
     },
     runFunc : async function(fname,param,motamam){
@@ -145,7 +145,18 @@ FSI = {
 	    const task = FSI.tasklist.get(nam);
 	    //console.log(nam,task,FSI.tasklist);
 	    await task(param,[]);
+	    return;
 	}
+	if (tr.subtrees.length == 5){
+	    const param = await FSI.evl(tr.subtrees[0]);
+	    const motam = await FSI.evlMotamamList(tr.subtrees[2]);
+	    const nam = tr.subtrees[3].subtrees[0].root[0];
+	    const task = FSI.tasklist.get(nam);
+	    console.log(param,motam);
+	    await task(param,motam);
+	    return;
+	}
+	
     },
     run : async function (tr){
         let ts = tr.subtrees[0];

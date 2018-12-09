@@ -22,7 +22,7 @@ try{
     console.log('notify-send is not supported');
 }
 
-FS.FSI.tasklist.set('بیپ-بیپ',()=>exec('spd-say "beep beep"'));
+FS.FSI.tasklist.set('بیپ-بیپ',async ()=>(await exec('spd-say "beep beep"')));
 
 const rl = readline.createInterface({
   input: process.stdin,

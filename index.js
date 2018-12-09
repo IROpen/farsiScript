@@ -11,6 +11,13 @@ FSI.tasklist.set('اجرا',async function(param,motamam){
 	    return undefined;
 	}
     }
+    if (motamam[0].harfeEzafe == 'با'){
+	var i = motamam[0].value;
+	const tr = fparse(param)[0];
+	while(i--){
+	    await FSI.run(tr);
+	}
+    }
 });
 
 module.exports = {
