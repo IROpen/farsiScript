@@ -15,12 +15,14 @@ wordlist = new Map([
     ['هر','har'],
     ['کن','kon'],
     ['را','ra'],
+    ['سپس','sepas'],
 ]);
 
 
 fsg = new tinynlp.Grammar([
     'root -> assign noghte | func_assign noghte | ask alamat_soal | cmd noghte',
-    'cmd -> eval_task ra esm kon | eval_task ra eval_motam_list esm kon',
+    'cmd -> cmd_tak | cmd_tak sepas cmd',
+    'cmd_tak -> eval_task ra esm kon | eval_task ra eval_motam_list esm kon',
     'assign -> esm eval_task ast | esm virgool eval_task ast' ,
     'func_assign -> esm input virgool eval_task ast | esm input eval_motam_list virgool eval_task ast',
     'input -> eval_task | har esm' ,

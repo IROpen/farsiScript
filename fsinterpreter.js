@@ -138,7 +138,7 @@ FSI = {
         }
         return tr.subtrees.map(f).join(' ');
     },
-    evlCmd : async function (tr){
+    evlCmdTak : async function (tr){
 	if (tr.subtrees.length == 4){
 	    const param = await FSI.evl(tr.subtrees[0]);
 	    const nam = tr.subtrees[2].subtrees[0].root[0];
@@ -156,7 +156,15 @@ FSI = {
 	    await task(param,motam);
 	    return;
 	}
-	
+    },
+    evlCmd : async function(tr){
+	if (tr.subtrees.length == 1){
+	    return FSI.evlCmdTak(tr.subtrees[0]);
+	}
+	if (tr.subtrees.length == 3){
+	    await FSI.evlCmdTak(tr.subtrees[0]);
+	    return await FSI.evlCmd(tr.subtrees[2]);
+	}
     },
     run : async function (tr){
         let ts = tr.subtrees[0];

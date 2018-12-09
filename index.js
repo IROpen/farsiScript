@@ -16,6 +16,7 @@ FSI.tasklist.set('اجرا',async function(param,motamam){
 	const tr = fparse(param)[0];
 	while(i--){
 	    await FSI.run(tr);
+	    //console.log("runed ",param);
 	}
     }
 });
