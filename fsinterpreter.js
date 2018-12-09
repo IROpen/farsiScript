@@ -188,9 +188,9 @@ FSI = {
             let trp = ts.subtrees[1].subtrees[0];
             let mymotamam = [];
             let rulf = ts.subtrees[ts.subtrees.length - 2];
-            console.log(rulf);
+            //console.log(rulf);
             if (rulf.subtrees[0].root == 'noyi') rulf = {root:"I",I:FSI.evl(rulf)};
-            console.log(rulf);
+            //console.log(rulf);
             if (ts.subtrees[2].root != 'virgool'){
                 mymotamam = FSI.evlMotamamList(ts.subtrees[2]);
             }
