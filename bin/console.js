@@ -4,6 +4,7 @@ const readline = require('readline');
 const FS = require('../index');
 var program = require('commander');
 const f2f = {};
+const { exec } = require('child_process');
 
 program
   .version('0.1.0')
@@ -20,6 +21,8 @@ try{
 }catch(e){
     console.log('notify-send is not supported');
 }
+
+FS.FSI.tasklist.set('بیپ-بیپ',()=>exec('spd-say "beep beep"'));
 
 const rl = readline.createInterface({
   input: process.stdin,
