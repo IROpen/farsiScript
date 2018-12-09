@@ -159,7 +159,7 @@ FSI = {
     },
     evlCmd : async function(tr){
 	if (tr.subtrees.length == 1){
-	    return FSI.evlCmdTak(tr.subtrees[0]);
+	    return await FSI.evlCmdTak(tr.subtrees[0]);
 	}
 	if (tr.subtrees.length == 3){
 	    await FSI.evlCmdTak(tr.subtrees[0]);

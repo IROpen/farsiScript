@@ -2,22 +2,20 @@ const FSI = require('./fsinterpreter');
 const fparse = require('./fsgrammar');
 
 FSI.tasklist.set('اجرا',async function(param,motamam){
-    if (motamam.length==0){
-	try{
-	    const tr = fparse(param)[0];
-	    return await FSI.run(tr);
-	}finally{
-	    //console.log(e);
-	    return undefined;
+    try{
+	const tr = fparse(param,'cmd_root')[0].subtrees[0];
+	if (motamam.length == 0){
+	    return await FSI.evlCmd(tr);
 	}
-    }
-    if (motamam[0].harfeEzafe == 'با'){
-	var i = motamam[0].value;
-	const tr = fparse(param)[0];
-	while(i--){
-	    await FSI.run(tr);
-	    //console.log("runed ",param);
+	if (motamam[0].harfeEzafe == 'با'){
+	    var i = motamam[0].value;
+	    while(i--){
+		await FSI.evlCmd(tr);
+		console.log("runed ",param);
+	    }
 	}
+    }catch(e){
+	return;
     }
 });
 

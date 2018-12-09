@@ -21,6 +21,7 @@ wordlist = new Map([
 
 fsg = new tinynlp.Grammar([
     'root -> assign noghte | func_assign noghte | ask alamat_soal | cmd noghte',
+    'cmd_root -> cmd',
     'cmd -> cmd_tak | cmd_tak sepas cmd',
     'cmd_tak -> eval_task ra esm kon | eval_task ra eval_motam_list esm kon',
     'assign -> esm eval_task ast | esm virgool eval_task ast' ,
@@ -52,9 +53,8 @@ function parseArabic(str) {
     });
 }
 
-function fparse(text){
+function fparse(text,rootRule = 'root'){
     text=parseArabic(text);
-    let rootRule = 'root';
     let chart = tinynlp.parse(text.match(/[^ ^"]+|"[^"]*"/g), fsg, rootRule);
     let trees = chart.getFinishedRoot(rootRule).traverse();                
     return trees;
