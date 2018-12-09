@@ -28,10 +28,13 @@ const rl = readline.createInterface({
 
 process.stdout.write('\x1b[36m>>> \x1b[0m');
 
-rl.on('line', async (input) => {
+const while1 = async (input) => {
     if (program.fingilish){
 	input = f2f.fa2fi(input);
     }
     console.log(await FS.eval(input));
-    process.stdout.write('\x1b[36m>>> \x1b[0m');
-});
+    rl.question('\x1b[36m>>> \x1b[0m',while1);
+};
+
+rl.question('\x1b[36m>>> \x1b[0m',while1);
+
