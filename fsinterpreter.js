@@ -139,6 +139,20 @@ FSI = {
         return tr.subtrees.map(f).join(' ');
     },
     evlCmdTak : async function (tr){
+	if (tr.subtrees.length == 2){
+	    //const param = await FSI.evl(tr.subtrees[0]);
+	    const nam = tr.subtrees[0].subtrees[0].root[0];
+	    const task = FSI.tasklist.get(nam);
+	    await task(undefined,[]);
+	    return;
+	}
+	if (tr.subtrees.length == 3){
+	    const motam = await FSI.evlMotamamList(tr.subtrees[0]);
+	    const nam = tr.subtrees[1].subtrees[0].root[0];
+	    const task = FSI.tasklist.get(nam);
+	    await task(undefined,motam);
+	    return;
+	}
 	if (tr.subtrees.length == 4){
 	    const param = await FSI.evl(tr.subtrees[0]);
 	    const nam = tr.subtrees[2].subtrees[0].root[0];
