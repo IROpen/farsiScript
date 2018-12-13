@@ -1,2 +1,0 @@
-# farsiscript
-how it is?
