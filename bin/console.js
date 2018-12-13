@@ -48,13 +48,13 @@ if (scriptFile == ""){
 }else{
     try{
 	readFile(scriptFile).then(async data=>{
-	    console.log(data);
-	    data = data.toString().replace(/./g,'.#').replace(/\?/g,'?#').split('#');
-	    console.log(data);
-	    /*for (let i = 0; i < data.length ; i++){
-		console.log(data[i]);
+	    //console.log(data);
+	    data = data.toString().replace(/\./g,'.#').replace(/\?/g,'?#').split('#');
+	    //console.log(data);
+	    for (let i = 0; i < data.length ; i++){
+		//console.log(data[i]);
 		await FS.eval(data[i]);
-	    }*/
+	    }
 	}).catch(e =>{throw e});
     }catch(e){
 	console.log(e);
