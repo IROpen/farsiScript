@@ -1,1 +1,1 @@
-dar in safhe grammar tozih dade mishavad
+در این صفحه گرامر توضیح داده می شود .
