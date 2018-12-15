@@ -21,14 +21,6 @@ if (program.fingilish){
     f2f.fa2fi = require('fingilish').jomle;
 }
 
-try{
-    const nof = require('notify-send');
-    FS.FSI.tasklist.set('چاپ',x => nof.notify('فارسی اسکریپت',x));
-}catch(e){
-    console.log('notify-send is not supported');
-}
-
-FS.FSI.tasklist.set('بیپ-بیپ',async ()=>(await exec('spd-say "beep beep"')));
 FS.FSI.tasklist.set('ترمینال',async (x)=>(await exec(x)));
 
 if (scriptFile == ""){
