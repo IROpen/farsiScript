@@ -10,8 +10,7 @@ FSI = {
     ['جمع' , 
     [ function(param,motamam){ return param+motamam[0].value ; } ] ],
     ['ضرب' , 
-    [ function(param,motamam){ return param*motamam[0].value ; } ] ],
-    
+    [ function(param,motamam){ return param*motamam[0].value ; } ] ],    
     ]),
     
     typelist : new Map([
@@ -196,6 +195,12 @@ FSI = {
             FSI.varlist.set(vn,val);
             return "فهمیدم .";
         }
+	if (ts.root == 'cmd_assign'){
+	    if (ts.subtrees.length == 4){
+		let esm = ts.subtrees[0].subtrees[0].root[0];
+		FSI.tasklist.set(esm,async () => (await FSI.evlCmd(ts.subtrees[3])));
+	    }
+	}
         if (ts.root == 'func_assign'){
             let funcname = ts.subtrees[0].subtrees[0].root[0];
             if (!FSI.funclist.has(funcname)) FSI.funclist.set(funcname,[]);

@@ -16,11 +16,12 @@ wordlist = new Map([
     ['کن','kon'],
     ['را','ra'],
     ['سپس','sepas'],
+    ['یعنی','yani'],
 ]);
 
 
 fsg = new tinynlp.Grammar([
-    'root -> assign noghte | func_assign noghte | ask alamat_soal | cmd noghte',
+    'root -> assign noghte | func_assign noghte | ask alamat_soal | cmd noghte | cmd_assign noghte',
     'cmd_root -> cmd',
     'cmd -> cmd_tak | cmd_tak sepas cmd',
     'cmd_tak -> eval_task ra esm kon | eval_task ra eval_motam_list esm kon | eval_motam_list esm kon | esm kon',
@@ -31,6 +32,7 @@ fsg = new tinynlp.Grammar([
     'eval_motam_list -> eval_motam_list eval_motamam | eval_motamam',
     'eval_motamam -> harfe_ezafe eval_task',
     'ask -> eval_task chist' ,
+    'cmd_assign -> esm kon yani cmd',
 ]);
 fsg.terminalSymbols = function(token){
     if (wordlist.has(token)){
