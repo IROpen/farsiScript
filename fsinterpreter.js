@@ -48,7 +48,7 @@ FSI = {
         for (let i = moa.length - 1 ; i>=0 ; i--){
             if ('value' in moa[i] && 'value' in mob[i] && mob[i].value != moa[i].value){
                 return false;
-            } 
+            }
         }
         return true;
     },
@@ -86,8 +86,8 @@ FSI = {
         }        
         if (tr.subtrees.length == 1){
             let ts = tr.subtrees[0];
-            if (ts.root == 'str'){
-                return ts.subtrees[0].root[0].slice(1, -1);
+            if (ts.root == 'obj'){
+                return JSON.parse(ts.subtrees[0].root[0]);
             }
             if (ts.root == 'num'){
                 return Number(ts.subtrees[0].root);

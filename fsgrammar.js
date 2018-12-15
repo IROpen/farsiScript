@@ -27,7 +27,7 @@ fsg = new tinynlp.Grammar([
     'assign -> esm eval_task ast | esm virgool eval_task ast' ,
     'func_assign -> esm input virgool eval_task ast | esm input eval_motam_list virgool eval_task ast',
     'input -> eval_task | har esm' ,
-    'eval_task -> noyi esm | parantez_baz eval_task parantez_baste | num | esm | str | esm eval_task | esm eval_task eval_motam_list' ,
+    'eval_task -> noyi esm | parantez_baz eval_task parantez_baste | num | esm | obj | esm eval_task | esm eval_task eval_motam_list' ,
     'eval_motam_list -> eval_motam_list eval_motamam | eval_motamam',
     'eval_motamam -> harfe_ezafe eval_task',
     'ask -> eval_task chist' ,
@@ -41,7 +41,7 @@ fsg.terminalSymbols = function(token){
             return op;
     }
     if( token.match(/^\d+$/) ) return ['num'];
-    if (token[0] == '"') return ['str'];
+    if (token[0] == '"' || token[0] == '{' || token[0] == '[') return ['obj'];
     return ['esm'];
 }
 
@@ -53,9 +53,23 @@ function parseArabic(str) {
     });
 }
 
+function tokenize(text){
+    var qd=0,bd=0;
+    text = text.replace(x=>(x=='\n'?' ':x)).split('');
+    for(let i=0;i<text.length;i++){
+	let c = text[i];
+	if (c=='"') qd^=1;
+	if (c=='{' || c=='[') bd++;
+	if (c=='}' || c==']') bd--;
+	if (c==' ' && bd==0 && qd==0) text[i]='\n';
+    }
+    return text.join('').split('\n').filter(Boolean);
+}
+
 function fparse(text,rootRule = 'root'){
-    text=parseArabic(text);
-    let chart = tinynlp.parse(text.match(/[^ ^"]+|"[^"]*"/g), fsg, rootRule);
+    text=tokenize(parseArabic(text));
+    //console.log(text);
+    let chart = tinynlp.parse(text, fsg, rootRule);
     let trees = chart.getFinishedRoot(rootRule).traverse();                
     return trees;
 }
