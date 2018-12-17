@@ -1,0 +1,1 @@
+FS = require('../index.js');
