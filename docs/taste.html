@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<script src="dist/terminal.js"></script>
+		<script src="dist/fs.min.js" charset="UTF-8"></script>
+	</head>
+	<body dir="rtl">
+		<div id="terminal">
+		<script>
+			t = new Terminal('terminal');
+			t.onCmd = async (x) => {
+				t.print(await FS.eval(x));
+			}
+		</script>
+	</body>
+</html>
