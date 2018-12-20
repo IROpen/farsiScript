@@ -9,7 +9,6 @@ class Terminal{
 	this.cn.tabIndex = '0';
 	this.cn.style.backgroundColor = 'black';
 	this.cn.style.color = 'white';
-	this.cn.style.width = '100%';
 	this.spn = document.createElement('span');
 	this.spn.style.color='cyan';
 	this.spn.innerHTML = '>>> ';
