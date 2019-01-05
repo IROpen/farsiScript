@@ -1,12 +1,16 @@
 FSI = {
     defs:{
-	varf:x=>x,
-	funcf:(fname,param,motamam)=>(fname+' '+param),
+	funcf:(fname,param,motamam)=>{
+	    if (param == undefined){
+		return fname;
+	    }
+	    return (fname+' '+param);
+	}
     },
     varlist : new Map([]),
     funclist : new Map([
-    ['منها-منها' , 
-    [ function(param,motamam){ return param - 1 ; } ] ],
+    ['منفی' , 
+    [ function(param,motamam){ return - param ; } ] ],
     ['جمع' , 
     [ function(param,motamam){ return param+motamam[0].value ; } ] ],
     ['ضرب' , 
@@ -62,9 +66,9 @@ FSI = {
 	const func = FSI.funclist.get(fname);
         if (func == undefined) return await FSI.defs.funcf(fname,param,motamam);
         for (let i = func.length - 1;i>=0;i--){
-            //console.log(func[i]);
             let jav = await func[i](param,motamam);
-            if (jav != undefined ) return jav;
+	    //console.log(jav);
+	    if (jav != undefined ) return jav;
         }
         return await FSI.defs.funcf(fname,param,motamam);
     },
@@ -92,12 +96,8 @@ FSI = {
                 return Number(ts.subtrees[0].root);
             }
             if (ts.root == 'esm'){
-		if (FSI.varlist.has(ts.subtrees[0].root[0])){
-                    return FSI.varlist.get(ts.subtrees[0].root[0]);
-		}
-		else{
-		    return FSI.defs.varf(ts.subtrees[0].root[0]);
-		}
+		let func = ts.subtrees[0].root[0];
+		return FSI.runFunc(func);
 	    }
         }
         if (tr.subtrees.length == 2){
@@ -123,12 +123,13 @@ FSI = {
         }
     },
     evl_with_dic : async function (tr,dic){
-        let backup = [];
-        dic.forEach((x,y)=>{ if (FSI.varlist.has(y)) backup.push([y,FSI.varlist.get(y)]); });
-        dic.forEach((x,y)=>FSI.varlist.set(y,x));
+        dic.forEach((val,funcname)=>{
+	    //console.log(funcname,val);
+	    if (!FSI.funclist.has(funcname)) FSI.funclist.set(funcname,[]);
+	    FSI.funclist.get(funcname).push((param,motamam)=>{ if (param==undefined) return val; });
+	});
         let retval = await FSI.evl(tr);
-        dic.forEach((x,y)=>FSI.varlist.delete(y));
-        backup.forEach(x=>FSI.varlist.set(x[0],x[1]));
+        dic.forEach((x,y)=>FSI.funclist.get(y).pop());
         return retval;
     },
     treeToText : function f(tr){
@@ -190,10 +191,11 @@ FSI = {
             return FSI.treeToText(ts.subtrees[0])+" ، "+val+" است .";
         }
         if (ts.root == 'assign'){
-            let vn = ts.subtrees.find(x=>(x.root == "esm")).subtrees[0].root[0];
+            let funcname = ts.subtrees.find(x=>(x.root == "esm")).subtrees[0].root[0];
             let val = await FSI.evl(ts.subtrees.find(x=>(x.root == "eval_task")));
-            FSI.varlist.set(vn,val);
-            return "فهمیدم .";
+            if (!FSI.funclist.has(funcname)) FSI.funclist.set(funcname,[]);
+	    FSI.funclist.get(funcname).push((param,motamam)=>{ if (param==undefined) return val; });
+	    return "فهمیدم .";
         }
 	if (ts.root == 'cmd_assign'){
 	    if (ts.subtrees.length == 4){
