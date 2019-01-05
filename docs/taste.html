@@ -30,9 +30,18 @@
 	                    در این قسمت علاوه بر این که می توانید آزادانه فارسی اسکریپت را امتحان کنید 
 	                    می توانید به صورت سریع و مختصر فارسی اسکریپت را یاد بگیرید.
 	                    </p>
-	                    <p>
-	                    متاسفانه من هنوز ساخته نشده ام :) من را در گیت هاب کامل کنید .
-	                    </p>
+	                    <div id="lesson-position">
+            <span id="lesson-left-button"><button type="button" id="buttonleft2" class="btn"><img src="images/right2.png" width="16" text="left2"></button></span>
+            <span id="lesson-number">درس 1</span>
+            <span id="lesson-right-button"><button type="button" id="buttonright2" class="btn"><img src="images/left2.png" width="16" text="right2"></button></span>
+            <span id="lesson-step-spacer"></span>
+            <span id="step-left-button"><button type="button" id="buttonleft1" class="btn"><img src="images/right1.png" width="16" text="left1"></button></span>
+            <span id="step-number">گام 1</span>
+            <span id="step-right-button"><button type="button" id="buttonright1" class="btn"><img src="images/left1.png" width="16" text="right1"></button></span>
+       </div>
+       <p>
+       فعلا چیزی در این جا موجود نیست !
+       </p>
 	                </div>
 	            </td>
 	        </tr>
@@ -42,6 +51,17 @@
 			t.onCmd = async (x) => {
 				t.print(await FS.eval(x));
 			}
+			function builder(lb,v){
+			    return ()=>{
+			        let t = document.getElementById(lb+'-number').innerHTML;
+			        t = t.substring(0,4)+(Number(t.substring(4))+v);
+			        document.getElementById(lb+'-number').innerHTML = t;
+			    }
+			}
+			document.getElementById('lesson-right-button').onclick = builder('lesson',1);
+			document.getElementById('lesson-left-button').onclick = builder('lesson',-1);
+			document.getElementById('step-right-button').onclick = builder('step',1);
+			document.getElementById('step-left-button').onclick = builder('step',-1);
 		</script>
 	</body>
 </html>
