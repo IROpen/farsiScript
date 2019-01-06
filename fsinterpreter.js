@@ -101,6 +101,9 @@ FSI = {
 	    }
         }
         if (tr.subtrees.length == 2){
+	    if (tr.subtrees[0].root == 'num'){
+		return {value:Number(tr.subtrees[0].subtrees[0].root[0]),unit:tr.subtrees[1].subtrees[0].root[0]};
+	    }
             let ts = tr.subtrees[0];
             if (ts.root == 'esm'){
                 let param = await f(tr.subtrees[1]);

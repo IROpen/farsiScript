@@ -28,7 +28,7 @@ fsg = new tinynlp.Grammar([
     'assign -> esm eval_task ast | esm virgool eval_task ast' ,
     'func_assign -> esm input virgool eval_task ast | esm input eval_motam_list virgool eval_task ast',
     'input -> eval_task | har esm' ,
-    'eval_task -> noyi esm | parantez_baz eval_task parantez_baste | num | esm | obj | esm eval_task | esm eval_task eval_motam_list' ,
+    'eval_task -> noyi esm | parantez_baz eval_task parantez_baste | num esm | num | esm | obj | esm eval_task | esm eval_task eval_motam_list' ,
     'eval_motam_list -> eval_motam_list eval_motamam | eval_motamam',
     'eval_motamam -> harfe_ezafe eval_task',
     'ask -> eval_task chist' ,
