@@ -45,7 +45,17 @@ FSI = {
         this.type = tpn;
         this.toString = () => (this.type+'('+this.id+')');
     },
-        
+
+    UnitNum : class {
+	constructor(val,unit){
+	    this.value = val;
+	    this.unit = unit;
+	}
+	toString(){
+	    return this.value+' '+this.unit;
+	}
+    },
+    
     matchMotamam : function(moa,mob){
         if (moa.length != mob.length) return false;
         for (let i = moa.length - 1 ; i>=0 ; i--){
@@ -102,7 +112,7 @@ FSI = {
         }
         if (tr.subtrees.length == 2){
 	    if (tr.subtrees[0].root == 'num'){
-		return {value:Number(tr.subtrees[0].subtrees[0].root[0]),unit:tr.subtrees[1].subtrees[0].root[0]};
+		return new FSI.UnitNum(Number(tr.subtrees[0].subtrees[0].root[0]),tr.subtrees[1].subtrees[0].root[0]);
 	    }
             let ts = tr.subtrees[0];
             if (ts.root == 'esm'){

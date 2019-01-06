@@ -12,6 +12,8 @@ wordlist = new Map([
     ['نوعی','noyi'],
     ['در','harfe_ezafe'],
     ['با','harfe_ezafe'],
+    ['از','harfe_ezafe'],
+    ['تا','harfe_ezafe'],
     ['هر','har'],
     ['کن','kon'],
     ['را','ra'],
