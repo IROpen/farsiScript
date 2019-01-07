@@ -65,11 +65,17 @@ FSI = {
         }
         return true;
     },
-    evlMotamamList : async function(tr){
+    evlMotamamList : async function f(tr){
         if (tr.subtrees.length == 1){
             let ts = tr.subtrees[0];
             return [ { harfeEzafe : ts.subtrees[0].subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  } ];
         }
+	if (tr.subtrees.length == 2){
+	    let res = await f(tr.subtrees[0]);
+	    let ts = tr.subtrees[1];
+	    res.push({ harfeEzafe : ts.subtrees[0].subtrees[0].root[0] , value : await FSI.evl(ts.subtrees[1])  });
+	    return res;
+	}
     },
     runFunc : async function(fname,param,motamam){
 	if (motamam == undefined) motamam = [];
