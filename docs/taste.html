@@ -39,7 +39,8 @@
             <span id="step-number">گام 1</span>
             <span id="step-right-button"><button type="button" id="buttonright1" class="btn"><img src="images/left1.png" width="16" text="right1"></button></span>
        </div>
-       <p>
+       <h4 id="onvan"></h4>
+       <p id="matn">
        فعلا چیزی در این جا موجود نیست !
        </p>
 	                </div>
@@ -47,6 +48,13 @@
 	        </tr>
 	    </table>
 		<script>
+		    var Donvan = document.getElementById('onvan');
+		    var Dmatn = document.getElementById('matn');
+		    var dat = {};
+		    fetch("lessons/lessons.json").then(res=>res.json()).then(res=>{
+		        dat = res;
+		        reload();
+		    });
 			t = new Terminal('terminal');
 			t.onCmd = async (x) => {
 				t.print(await FS.eval(x));
@@ -56,7 +64,37 @@
 			        let t = document.getElementById(lb+'-number').innerHTML;
 			        t = t.substring(0,4)+(Number(t.substring(4))+v);
 			        document.getElementById(lb+'-number').innerHTML = t;
+			        reload();
 			    }
+			}
+			let getId = (lb) => Number(document.getElementById(lb+'-number').innerHTML.substring(4));
+			let setId = (lb,w) => document.getElementById(lb+'-number').innerHTML = document.getElementById(lb+'-number').innerHTML.substring(0,4)+w;
+			function reload(){
+			    let lessonId = getId('lesson');
+			    let stepId = getId('step');
+			    if (lessonId<1){
+			        setId('lesson',1);
+			        reload();
+			    }
+			    if (stepId<1){
+			        setId('step',1);
+			        reload();
+			    }
+			    lessonId--;
+			    stepId--;
+			    let lesson = dat[lessonId];
+			    if (!lesson){
+			        Donvan.innerHTML = "";
+			        Dmatn.innerHTML = "فعلا چیزی در اینجا موجود نیست";
+			        return;    
+			    }
+			    Donvan.innerHTML = lesson.title;
+			    let step = lesson.steps[stepId];
+			    if (!step){
+			        Dmatn.innerHTML = "فعلا چیزی در اینجا موجود نیست";
+			        return;    
+			    }
+			    Dmatn.innerHTML = step;
 			}
 			document.getElementById('lesson-right-button').onclick = builder('lesson',1);
 			document.getElementById('lesson-left-button').onclick = builder('lesson',-1);
